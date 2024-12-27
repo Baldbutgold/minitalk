@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -27,5 +27,8 @@ int	ft_puthex(unsigned int n, int is_upper);
 int	ft_put_pointer(unsigned long p);
 int	ft_printf_rest(const char *format, va_list args);
 int	ft_treat_pointer(unsigned long pointer);
+int	ft_atoi(const char *nptr);
+int	ft_isdigit(int c);
+
 
 #endif

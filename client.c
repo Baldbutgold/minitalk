@@ -4,17 +4,28 @@ char	*msg_transform(char *message)
 {
 	int	i;
 	int	j;
-	unsigned char	bit;
 	char	*transformed_message;
 
+	i = 0;
 	transformed_message = malloc((ft_strlen(message) * 8) + 1);
-	while (message[i++])
+	if (!transformed_message)
+		return (NULL);
+	printf("malloced %ld\n", ft_strlen(message) * 8 + 1);
+	transformed_message[0] = 0;
+	while (message[i] != '\0')
 	{
+		printf("this is i : %d\n", i);
 		j = 8;
 		while (j--)
-			transformed_message[i + j] = (octet >> i & 1) + '0';
+		{
+			printf("this is j : %d and this is the char %c\n and this is bit? %c\n", j, message[i], message[i] >> i + j & 1 + '0');
+			transformed_message[i + j] = (message[i] >> i + j& 1) + '0';
+		}
+		i++;
 	}
-	transformed_message[i] = '\0';
+	printf("null terminated at %d\n", i * 8 + 1);
+	transformed_message[(i * 8) + 1] = 0;
+	printf("this is the bitted message %s\n", transformed_message);
 	return (transformed_message);
 }
 
@@ -27,6 +38,7 @@ int	main(int av, char **ac)
 		server_pid = ft_atoi(ac[1]);
 		message = ac[2];
 		printf("This is server id %d\n This is the message %s\n", server_pid, message);
+		msg_transform(message);
 	}
 	else
 		printf("require more args");

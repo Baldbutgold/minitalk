@@ -16,8 +16,10 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <stdlib.h>
 # include <limits.h>
 
+size_t	ft_strlen(const char *s);
 int	ft_printf(const char *format, ...);
 int	ft_putchar(char c);
 int	ft_putstr(char *str);

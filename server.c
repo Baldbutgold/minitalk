@@ -1,7 +1,8 @@
-#include <unistd.h>
-#include "ft_printf.h"
+#include "minitalk.h"
 
 int	main()
 {
-	ft_printf("%d", getpid());
+	printf("%d", getpid());
+	while (1)
+		sleep(100);
 }

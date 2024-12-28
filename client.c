@@ -1,32 +1,26 @@
 #include "minitalk.h"
 
-char	*msg_transform(char *message)
+char	*enc_str(char* message)
 {
 	int	i;
 	int	j;
-	char	*transformed_message;
+	int	x;
+	char	*string_bits;
 
-	i = 0;
-	transformed_message = malloc((ft_strlen(message) * 8) + 1);
-	if (!transformed_message)
+	j = 0;
+	x = 0;
+	string_bits = malloc(ft_strlen(message) + 1);
+	if (!string_bits)
 		return (NULL);
-	printf("malloced %ld\n", ft_strlen(message) * 8 + 1);
-	transformed_message[0] = 0;
-	while (message[i] != '\0')
+	while (message[x])	
 	{
-		printf("this is i : %d\n", i);
-		j = 8;
-		while (j--)
-		{
-			printf("this is j : %d and this is the char %c\n and this is bit? %c\n", j, message[i], message[i] >> i + j & 1 + '0');
-			transformed_message[i + j] = (message[i] >> i + j& 1) + '0';
-		}
-		i++;
+		i = 8;
+		while (i--)
+			string_bits[j++] = (message[x] >> i & 1) + '0';
+		x++;
 	}
-	printf("null terminated at %d\n", i * 8 + 1);
-	transformed_message[(i * 8) + 1] = 0;
-	printf("this is the bitted message %s\n", transformed_message);
-	return (transformed_message);
+	string_bits[j] = 0;
+	return (string_bits);
 }
 
 int	main(int av, char **ac)
@@ -38,7 +32,7 @@ int	main(int av, char **ac)
 		server_pid = ft_atoi(ac[1]);
 		message = ac[2];
 		printf("This is server id %d\n This is the message %s\n", server_pid, message);
-		msg_transform(message);
+		printf("This is encrypted message %s\n", enc_str(message));
 	}
 	else
 		printf("require more args");

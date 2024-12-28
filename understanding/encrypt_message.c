@@ -9,7 +9,7 @@ char	*enc_str(char* message)
 
 	j = 0;
 	x = 0;
-	string_bits = malloc(5 * 8 + 1);
+	string_bits = malloc(ft_strlen(message) * 8 + 1);
 	if (!string_bits)
 		return (NULL);
 	while (message[x])	
@@ -42,6 +42,7 @@ char	decrypt_msg(char *byte)
 
 	i = 0;
 	x = 0;
+	decrypted_string = malloc(ft_strlen(byte) / 8 + 1);
 	while (byte[i])
 	{
 		j = 8;
@@ -54,14 +55,15 @@ char	decrypt_msg(char *byte)
 		}
 		x++;
 	}
-	decrypted_string[5] = 0;
+	decrypted_string[x] = 0;
 	printf("%s\n", decrypted_string);
-
+	return (decrypted_string);
 }
 
 int	main()
 {
 	char	*enc_msg;
-	enc_msg = enc_str("hello");
+	enc_msg = enc_str("hello this is a big test");
+	printf("%s\n", enc_msg);
 	decrypt_msg(enc_msg); // should be transformed to h
 }

@@ -14,6 +14,7 @@
 # define MINITALK_H
 
 # include <stdio.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdlib.h>

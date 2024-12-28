@@ -1,31 +1,36 @@
 #include "../minitalk.h"
 
-char	*ft_print_bits(unsigned char octet)
+char	*enc_str(char* message)
 {
 	int	i;
-	char	*str_bits;
+	int	j;
+	int	x;
+	char	*string_bits;
 
-	str_bits = malloc(9);
-	i = 8;
-	while (i--)
-		str_bits[i] = (octet >> i & 1) + '0';
-	str_bits[8] = 0;
-	return (str_bits);
+	j = 0;
+	x = 0;
+	string_bits = malloc(5 * 8 + 1);
+	if (!string_bits)
+		return (NULL);
+	while (message[x])	
+	{
+		i = 8;
+		while (i--)
+			string_bits[j++] = (message[x] >> i & 1) + '0';
+		x++;
+	}
+	string_bits[j] = 0;
+	return (string_bits);
+}
+
+char	*decrypt_msg(char *bits_str)
+{
+	
 }
 
 int	main()
 {
-	char	*message;
-	char	*encrypted_message;
-	int	i;
-
-	i = 0;
-	message = "hello";
-	encrypted_message = malloc(5 * 8 + 1);
-	while(message[i])
-	{
-		printf("%s\n", ft_print_bits(message[i]));
-		i++;
-	}
-	encrypted_message[5 * 8] = 0;
+	char	*enc_msg;
+	enc_msg = enc_str("hello");
+	printf("%s", enc_msg);
 }

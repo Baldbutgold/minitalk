@@ -1,24 +1,32 @@
 #include "minitalk.h"
 
-void	sigusr1_handler(int signum)
+void	sig_handler(int signum)
 {
-	printf("Got Sigusr1 : 1\n");
-}
+	static int	counter = 0;
 
-void	sigusr2_handler(int signum)
-{
-	printf("Got Sigusr2 : 0\n");
+	if (signum == SIGUSR1)
+	{
+		printf("1\n");
+		counter += 1;
+	}
+	else if (signum == SIGUSR2)
+	{
+		printf("0\n");
+		counter += 1;
+	}
+	//printf("%d\n", counter);
 }
 
 int	main()
 {
+	struct sigaction	signal_recieved;
 	pid_t	server_pid;
 
-	server_pid = getpid();
-	printf("%d\n", server_pid);
-
-	signal(SIGUSR1, sigusr1_handler);
-	signal(SIGUSR2, sigusr2_handler);
+	printf("%d\n", getpid());	
+	signal_recieved.sa_handler = sig_handler;
+	signal_recieved.sa_flags = 0;
+	sigaction(SIGUSR1, &signal_recieved, NULL);
+	sigaction(SIGUSR2, &signal_recieved, NULL);
 
 	while (1)
 		sleep(100);

@@ -5,20 +5,18 @@
 
 void signal_handler(int signum) 
 {
-  printf("Received SIGINT!\n", signum);
+  printf("Received SIGUSR1!\n", signum);
   exit(0);
 }
 
 int main() 
 {
-  // Set the signal handler for the SIGINT and SIGTERM signals
-  // to the signal_handler function
+	printf("%d\n", getpid());
   
-  signal(SIGINT, signal_handler);
+  signal(SIGUSR1, signal_handler);
 
   while (1) {
     // Do some work here...
-	printf("%d", getpid());
     pause();
   }
 

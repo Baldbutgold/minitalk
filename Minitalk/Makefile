@@ -1,55 +1,42 @@
 #------------------ Srcs & Objs -------------------#
 SERVER_SRC = server.c
-
 CLIENT_SRC = client.c
-
-SERVER_OBJS = $(SERVER_SRC:.c=.o)
-
-CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
+#SERVER_OBJS = $(SERVER_SRC:.c=.o)
+#CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 
 #------------------ LIBFT ------------------#
-
-LIBFT = cd libft && make
-
-LIB = libft/libft.a
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
 #----------------- Constant namings ---------------------#
-
-CC			= cc
-RM			= rm -f
-AR			= ar rcs
-
-CFLAGS		= 
+CC = cc
+RM = rm -f
+#don't forget to put those back here
+#CFLAGS = -Wall -Werror -Wextra
 
 SERVER_NAME = server
-
 CLIENT_NAME = client
 
 #--------------------- RULES --------------------#
 
-%.o: %.c
-			${CC} ${CFLAGS} -c $< -o $@
+all: $(LIBFT) $(SERVER_NAME) $(CLIENT_NAME)
 
-all: $(NAME)
+$(LIBFT):
+		@cd libft && make
 
-$(NAME):	libft server client
+$(SERVER_NAME): $(SERVER_SRC)
+		$(CC) $(CFLAGS) $< $(LIBFT) -o $@
 
-libft: $(LIBFT)
-
-server: $(SERVER_OBJS)
-		$(CC) $(CFLAGS) $(SERVER_OBJS) $(LIB) -o $(SERVER_NAME)
-
-client: $(CLIENT_OBJS)
-		$(CC) $(CFLAGS) $(CLIENT_OBJS) $(LIB) -o $(CLIENT_NAME)
+$(CLIENT_NAME): $(CLIENT_SRC)
+		$(CC) $(CFLAGS) $< $(LIBFT) -o $@
 
 clean:
-		${RM} $(CLIENT_OBJS) $(SERVER_OBJS)
-		cd libft && make clean
+		$(RM) $(SERVER_NAME) $(CLIENT_NAME)
+		@cd $(LIBFT_DIR) && make clean
 
 fclean: clean
-		${RM} $(SERVER_NAME) $(CLIENT_NAME)
-		cd libft && make fclean
+		@cd $(LIBFT_DIR) && make fclean
 
-re: 	fclean all
+re: fclean all
 
-.PHONY: all server client libft clean fclean re
+.PHONY: all clean fclean re

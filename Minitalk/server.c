@@ -14,19 +14,19 @@ void	sig_handler(int signum)
 		printf("0\n");
 		counter += 1;
 	}
-	//printf("%d\n", counter);
 }
 
-int	main()
+int	main(void)
 {
-	struct sigaction	signal_recieved;
-	pid_t	server_pid;
+	struct sigaction	signal_received;
+	pid_t				server_pid;
 
+	sigemptyset(&signal_received.sa_mask);
 	printf("%d\n", (int)getpid());	
-	signal_recieved.sa_handler = sig_handler;
-	signal_recieved.sa_flags = 0;
-	sigaction(SIGUSR1, &signal_recieved, NULL);
-	sigaction(SIGUSR2, &signal_recieved, NULL);
+	signal_received.sa_handler = sig_handler;
+	signal_received.sa_flags = 0;
+	sigaction(SIGUSR1, &signal_received, NULL);
+	sigaction(SIGUSR2, &signal_received, NULL);
 
 	while (1)
 		sleep(100);

@@ -18,7 +18,7 @@ char	decrypt_msg(char *byte)
 	x = 0;
 	while (byte[i])
 	{
-		j = 8;
+		j = 16;
 		decrypted_string[x] = 0;
 		while(j--)
 		{
@@ -30,4 +30,9 @@ char	decrypt_msg(char *byte)
 	}
 	decrypted_string[5] = 0;
 	printf("%s\n", decrypted_string);
+}
+
+int	main()
+{
+	decrypt_msg("011011000110111");
 }

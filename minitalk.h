@@ -9,6 +9,5 @@
 # include "libft/libft.h"
 
 void    sig_handler(int signum);
-void    handle_signals(void);  // Add prototype
 
 #endif

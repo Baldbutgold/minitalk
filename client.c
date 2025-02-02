@@ -32,6 +32,7 @@ int	main(int av, char **ac)
 	if (av == 3)
 	{
 		pid = ft_atoi(ac[1]);
+		//check if pid is valid
 		if (!pid)
 		{
 			ft_putstr_fd("ERROR, Wrong value", 1);

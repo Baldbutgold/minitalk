@@ -1,53 +1,50 @@
 #include "minitalk.h"
 
-char	*enc_str(char *message)
-{
-	int		i;
-	int		j;
-	int		x;
-	char	*string_bits;
+// char	*enc_str(char *message)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		x;
+// 	char	*string_bits;
 
-	j = 0;
-	x = 0;
-	string_bits = malloc(ft_strlen(message) * 8 + 1);
-	if (!string_bits)
-		return (NULL);
-	while (message[x])
-	{
-		i = 8;
-		while (i--)
-			string_bits[j++] = (message[x] >> i & 1) + '0';
-		x++;
-	}
-	string_bits[j] = 0;
-	return (string_bits);
-}
+// 	j = 0;
+// 	x = 0;
+// 	string_bits = malloc(ft_strlen(message) * 8 + 1);
+// 	if (!string_bits)
+// 		return (NULL);
+// 	while (message[x])
+// 	{
+// 		i = 8;
+// 		while (i--)
+// 			string_bits[j++] = (message[x] >> i & 1) + '0';
+// 		x++;
+// 	}
+// 	string_bits[j] = 0;
+// 	return (string_bits);
+// }
 
-void	send_signal(char *enc_message, pid_t server_pid)
+void	send_signal(char *message, pid_t server_pid)
 {
 	int			i;
-	static int	count;
+	int			current_letter;
 
-	count = 0;
-	i = 0;
-	while (enc_message[i])
+	current_letter = 0;
+	while (message[current_letter])
 	{
-		if (enc_message[i] == '1')
+		i = 7;
+		while (i >= 0)
 		{
-			printf("sending 1\n");
-			kill(server_pid, SIGUSR1);
-			count += 1;
+			printf("I is : %d\n", i);
+			if (((unsigned char)(message[current_letter] >> (7 - i)) & 1) == 1)
+				kill(server_pid, SIGUSR1);
+			if (((unsigned char)(message[current_letter] >> (7 - i)) & 1) == 0)
+				kill(server_pid, SIGUSR2);
+			i--;
+			usleep(50);
 		}
-		else if (enc_message[i] == '0')
-		{
-			printf("sending 0\n");
-			kill(server_pid, SIGUSR2);
-			count += 1;
-		}
-		i++;
-		usleep(50);
+		current_letter++;
 	}
-	printf("this is count %d\n", count);
+	printf("\n current letter : %d\n", current_letter);
 }
 
 int	main(int av, char **ac)
@@ -58,9 +55,20 @@ int	main(int av, char **ac)
 	if (av == 3)
 	{
 		pid = ft_atoi(ac[1]);
+		if (!pid)
+		{
+			ft_putstr_fd("ERROR, Wrong value", 1);
+			return (0);
+		}
 		message = ac[2];
-		send_signal(enc_str(message), pid);
+		if (message[0] == 0)
+		{
+			ft_putstr_fd("You didn't send any text, retry!", 1);
+			return (0);
+		}
+		send_signal(message, pid);
 	}
 	else
-		printf("require more args");
+		ft_putstr_fd("require more/less args\n commad is ./client PID MESSAGE", 1);
+	return (0);
 }

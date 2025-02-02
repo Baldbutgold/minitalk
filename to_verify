@@ -1,0 +1,18 @@
+# Make sure to not relink
+# the program shouldn't do any of those things : segmentation fault, bus error, double free, and so forth
+# no memory leaks
+# one global variable one for the client and one for the server
+# only those functions  ◦ write
+                        ◦ ft_printf and any equivalent YOU coded
+                        ◦ signal
+                        ◦ sigemptyset
+                        ◦ sigaddset
+                        ◦ sigaction
+                        ◦ kill
+                        ◦ getpid
+                        ◦ malloc
+                        ◦ free
+                        ◦ pause
+                        ◦ sleep
+                        ◦ usleep
+                        ◦ exit

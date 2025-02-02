@@ -31,10 +31,10 @@ $(CLIENT_NAME): $(CLIENT_SRC)
 		$(CC) $(CFLAGS) $< $(LIBFT) -o $@
 
 clean:
-		$(RM) $(SERVER_NAME) $(CLIENT_NAME)
 		@cd $(LIBFT_DIR) && make clean
 
 fclean: clean
+		$(RM) $(SERVER_NAME) $(CLIENT_NAME)
 		@cd $(LIBFT_DIR) && make fclean
 
 re: fclean all

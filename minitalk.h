@@ -8,6 +8,4 @@
 # include <sys/types.h>
 # include "libft/libft.h"
 
-void    sig_handler(int signum);
-
 #endif

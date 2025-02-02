@@ -1,25 +1,26 @@
 #include "minitalk.h"
 
-void	send_signal(char *message, pid_t server_pid)
+void	send_signal(char *message, pid_t pid)
 {
-	int			i;
-	int			current_letter;
+    int	i;
+    int	current_letter;
 
-	current_letter = 0;
-	while (message[current_letter])
-	{
-		i = 7;
-		while (i >= 0)
-		{
-			if ((unsigned char)(message[current_letter] >> i & 1) == 1)
-				kill(server_pid, SIGUSR1);
-			if ((unsigned char)(message[current_letter] >> i & 1) == 0)
-				kill(server_pid, SIGUSR2);
-			i--;
-			usleep(50);
-		}
-		current_letter++;
-	}
+    current_letter = 0;
+    while (message[current_letter])
+    {
+        i = 7;
+        while (i >= 0)
+        {
+            if ((unsigned char)(message[current_letter] >> i & 1) == 1)
+                kill(pid, SIGUSR1);
+            else
+                kill(pid, SIGUSR2);
+            i--;
+            usleep(300);
+        }
+        current_letter++;
+        usleep(200);
+    }
 }
 
 int	main(int ac, char **av)

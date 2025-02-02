@@ -1,28 +1,5 @@
 #include "minitalk.h"
 
-// char	*enc_str(char *message)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		x;
-// 	char	*string_bits;
-
-// 	j = 0;
-// 	x = 0;
-// 	string_bits = malloc(ft_strlen(message) * 8 + 1);
-// 	if (!string_bits)
-// 		return (NULL);
-// 	while (message[x])
-// 	{
-// 		i = 8;
-// 		while (i--)
-// 			string_bits[j++] = (message[x] >> i & 1) + '0';
-// 		x++;
-// 	}
-// 	string_bits[j] = 0;
-// 	return (string_bits);
-// }
-
 void	send_signal(char *message, pid_t server_pid)
 {
 	int			i;
@@ -34,17 +11,17 @@ void	send_signal(char *message, pid_t server_pid)
 		i = 7;
 		while (i >= 0)
 		{
-			printf("I is : %d\n", i);
-			if (((unsigned char)(message[current_letter] >> (7 - i)) & 1) == 1)
+			// printf("I is : %d\n", i);
+			if ((unsigned char)(message[current_letter] >> i & 1) == 1)
 				kill(server_pid, SIGUSR1);
-			if (((unsigned char)(message[current_letter] >> (7 - i)) & 1) == 0)
+			if ((unsigned char)(message[current_letter] >> i & 1) == 0)
 				kill(server_pid, SIGUSR2);
 			i--;
 			usleep(50);
 		}
 		current_letter++;
 	}
-	printf("\n current letter : %d\n", current_letter);
+	// send null terminator
 }
 
 int	main(int av, char **ac)

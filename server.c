@@ -1,5 +1,4 @@
 #include "minitalk.h"
-#include <signal.h>
 
 void sig_handler(int signum)
 {
@@ -15,10 +14,6 @@ int	main(void)
 
 	ft_putnbr_fd((int)getpid(), 1);
 	ft_putchar_fd('\n', 1);
-	signal_received.sa_handler = sig_handler;
-	signal_received.sa_flags = 0;
-	sigaction(SIGUSR1, &signal_received, NULL);
-	sigaction(SIGUSR2, &signal_received, NULL);
 
 	while (1)
 		sleep(1000);	

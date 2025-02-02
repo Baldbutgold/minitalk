@@ -11,7 +11,6 @@ void	send_signal(char *message, pid_t server_pid)
 		i = 7;
 		while (i >= 0)
 		{
-			// printf("I is : %d\n", i);
 			if ((unsigned char)(message[current_letter] >> i & 1) == 1)
 				kill(server_pid, SIGUSR1);
 			if ((unsigned char)(message[current_letter] >> i & 1) == 0)
@@ -47,6 +46,6 @@ int	main(int av, char **ac)
 		send_signal(message, pid);
 	}
 	else
-		ft_putstr_fd("require more/less args\n commad is ./client PID MESSAGE", 1);
+		ft_putstr_fd("require more/less args\ncommad is ./client PID MESSAGE", 1);
 	return (0);
 }

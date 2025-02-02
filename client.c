@@ -20,32 +20,29 @@ void	send_signal(char *message, pid_t server_pid)
 		}
 		current_letter++;
 	}
-	// send null terminator
 }
 
-int	main(int av, char **ac)
+int	main(int ac, char **av)
 {
 	pid_t	pid;
 	char	*message;
 
-	if (av == 3)
+	if (ac == 3)
 	{
-		pid = ft_atoi(ac[1]);
-		//check if pid is valid
-		if (!pid)
-		{
-			ft_putstr_fd("ERROR, Wrong value", 1);
-			return (0);
-		}
-		message = ac[2];
+		pid = ft_atoi(av[1]);
+		message = av[2];
 		if (message[0] == 0)
 		{
 			ft_putstr_fd("You didn't send any text, retry!", 1);
 			return (0);
 		}
 		send_signal(message, pid);
+		send_signal("\n", pid);
 	}
 	else
+	{
 		ft_putstr_fd("require more/less args\ncommad is ./client PID MESSAGE", 1);
+		return (1);
+	}
 	return (0);
 }

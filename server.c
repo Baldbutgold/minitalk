@@ -1,20 +1,29 @@
 #include "minitalk.h"
 
-void sig_handler(int signum)
+void sig_handler(int signal)
 {
-    if (signum == SIGUSR1)
-        write(1, "1\n", 2);
-    if (signum == SIGUSR1)
-        write(1, "0\n", 2);
+	static int 		bit;
+	static int 		i;
+
+    if (signal == SIGUSR1)
+		i |= (0x01 << bit);
+	bit++;
+	if (bit == 8)
+	{
+		printf("%c", i);
+		bit = 0;
+		i = 0;
+	}
 }
 
 int	main(void)
 {
-	struct sigaction	signal_received;
-
 	ft_putnbr_fd((int)getpid(), 1);
 	ft_putchar_fd('\n', 1);
-
 	while (1)
-		sleep(1000);	
+	{
+		signal(SIGUSR1, sig_handler);
+		signal(SIGUSR2, sig_handler);
+		pause();	
+	}
 }

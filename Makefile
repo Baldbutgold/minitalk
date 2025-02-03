@@ -1,14 +1,15 @@
 #------------------ Srcs & Objs -------------------#
+
 SERVER_SRC = server.c
 CLIENT_SRC = client.c
-#SERVER_OBJS = $(SERVER_SRC:.c=.o)
-#CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 
 #------------------ LIBFT ------------------#
+
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 #----------------- Constant namings ---------------------#
+
 CC = cc
 RM = rm -f
 CFLAGS = -Wall -Werror -Wextra
@@ -18,18 +19,19 @@ CLIENT_NAME = client
 
 #--------------------- RULES --------------------#
 
-all: $(LIBFT) $(SERVER_NAME) $(CLIENT_NAME)
+all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(LIBFT):
 		@cd libft && make
 
-$(SERVER_NAME): $(SERVER_SRC)
+$(SERVER_NAME): $(SERVER_SRC) $(LIBFT)
 		$(CC) $(CFLAGS) $< $(LIBFT) -o $@
 
-$(CLIENT_NAME): $(CLIENT_SRC)
+$(CLIENT_NAME): $(CLIENT_SRC) $(LIBFT)
 		$(CC) $(CFLAGS) $< $(LIBFT) -o $@
 
 clean:
+		$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
 		@cd $(LIBFT_DIR) && make clean
 
 fclean: clean
@@ -39,3 +41,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+.SECONDARY: client.o server.o libft/libft.a

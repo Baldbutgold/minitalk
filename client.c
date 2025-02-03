@@ -28,10 +28,9 @@ void	send_signal(char *message, pid_t pid)
 			else
 				kill(pid, SIGUSR2);
 			i--;
-			usleep(300);
+			usleep(500);
 		}
 		current_letter++;
-		usleep(500);
 	}
 }
 

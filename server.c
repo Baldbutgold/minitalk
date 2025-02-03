@@ -14,11 +14,9 @@
 
 static void	sig_handler(int signum)
 {
-	static unsigned char	c;
-	static int				bits;
+	static unsigned char	c = 0;
+	static int				bits = 0;
 
-	c = 0;
-	bits = 0;
 	if (signum == SIGUSR1)
 		c = (c << 1) | 1;
 	else if (signum == SIGUSR2)

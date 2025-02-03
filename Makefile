@@ -11,8 +11,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 #----------------- Constant namings ---------------------#
 CC = cc
 RM = rm -f
-#don't forget to put those back here
-#CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 SERVER_NAME = server
 CLIENT_NAME = client

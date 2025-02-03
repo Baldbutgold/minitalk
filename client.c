@@ -1,26 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-hadj <ael-hadj@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/03 10:28:09 by ael-hadj          #+#    #+#             */
+/*   Updated: 2025/02/03 10:28:10 by ael-hadj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	send_signal(char *message, pid_t pid)
 {
-    int	i;
-    int	current_letter;
+	int	i;
+	int	current_letter;
 
-    current_letter = 0;
-    while (message[current_letter])
-    {
-        i = 7;
-        while (i >= 0)
-        {
-            if ((unsigned char)(message[current_letter] >> i & 1) == 1)
-                kill(pid, SIGUSR1);
-            else
-                kill(pid, SIGUSR2);
-            i--;
-            usleep(300);
-        }
-        current_letter++;
-        usleep(200);
-    }
+	current_letter = 0;
+	while (message[current_letter])
+	{
+		i = 7;
+		while (i >= 0)
+		{
+			if ((message[current_letter] >> i & 1) == 1)
+				kill(pid, SIGUSR1);
+			else
+				kill(pid, SIGUSR2);
+			i--;
+			usleep(300);
+		}
+		current_letter++;
+		usleep(500);
+	}
 }
 
 int	main(int ac, char **av)
@@ -42,7 +54,7 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		ft_putstr_fd("require more/less args\ncommad is ./client PID MESSAGE", 1);
+		ft_putstr_fd("commad is ./client PID MESSAGE\n", 1);
 		return (1);
 	}
 	return (0);
